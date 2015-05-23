@@ -2,7 +2,9 @@
 
 angular.module('smsFilters', [])
     .filter('smsKeyboard', function () {
-        return function (input) {
+        var keyboardFilter = function (input) {
             return 'TESTE DE MESA';
-        };
+        }
+
+        return keyboardFilter;
     });
