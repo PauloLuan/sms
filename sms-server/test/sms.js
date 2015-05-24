@@ -41,6 +41,14 @@ describe('Assertions for keyboard functions', function () {
         done();
     });
 
+    it('isOnlyNumbersOrUnderscore should return if the inputs contains only numbers and underscore', function (done) {
+        sms.isOnlyNumbersOrUnderscore('123_').should.be.true;
+        sms.isOnlyNumbersOrUnderscore('555').should.be.true;
+        sms.isOnlyNumbersOrUnderscore('833777783303_33063377772').should.be.true;
+        sms.isOnlyNumbersOrUnderscore('123_a').should.be.false;
+        sms.isOnlyNumbersOrUnderscore('abc_34').should.be.false;
+        done();
+    });
 });
 
 describe('Assertions for /sms endpoint', function () {
