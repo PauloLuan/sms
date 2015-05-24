@@ -65,6 +65,47 @@ var textToNumber = function (inputText) {
     return processedText;
 };
 
+var isOnlyNumbersOrUnderscore = function(input) {
+	var isValid;
+
+	for (var i = 0; i < input.length; i++) {
+		var tempNumber = parseInt(input[i]);
+		
+		if(_.isNaN(tempNumber) && (input[i] !== '_')) {
+			isValid = false;
+			break;
+		}
+
+		isValid = _.isNumber(tempNumber) || (tempNumber === '_');
+		if(isValid === false) {
+			break;
+		}
+	};
+
+	if(_.isNull(isValid)) {
+		isValid = false;
+	}
+
+	return isValid;
+}
+
+var numberToText = function (inputNumber) {
+    var blocks = [];
+    var counter, lastNumber, result;
+
+    var lowerInput = inputNumber.toLowerCase(); 
+
+    _.forEach(lowerInput, function (value, key) {
+   		// quebrar em pequenos pedaços, objeto com: {keyboardNumber, index}
+    	// iterar sobre esses blocos tipo: ['222', '33', '4', '555']
+    	// verificar _ e apenas ignorar e passar pro proximo bloco
+    	// tem que ter função pra passar uma seuqencia de numeros e ele devolver a letra
+    	// adicionar ao resultado
+    });
+
+    return processedText;
+}
+
 router.post('/number', function (req, res, next) {
     var params = req.body;
     var result = textToNumber(params.text);
@@ -77,8 +118,10 @@ router.post('/text', function (req, res, next) {
     return res.json({});
 });
 
+exports.isOnlyNumbersOrUnderscore = isOnlyNumbersOrUnderscore;
 exports.repeatString = repeatString;
 exports.findValueIndex = findValueIndex;
 exports.keyboard = keyboard;
 exports.textToNumber = textToNumber;
+exports.numberToText = numberToText;
 exports.router = router;
