@@ -52,6 +52,12 @@ var textToNumber = function (inputText) {
 		if(valueIndex) {
 			valueIndex.index += 1; // arrays begins on zero, we have to increase the element before to do the next operation
 			var multipliedString = repeatString(valueIndex.keyboardNumber, valueIndex.index);
+			
+			// must add an underscore when the sequence is the same as the last number.
+			if(processedText.slice(-1) == valueIndex.keyboardNumber) {
+				processedText += "_";
+			}
+
 			processedText += multipliedString;
 		}
     });
