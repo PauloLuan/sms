@@ -96,25 +96,38 @@ var splitNumberSequences = function (inputArray) {
     var result = [],
         lastIndex = 0;
 
-    for (var i = 0; i < inputArray.length; i++) {
+	for (var i = 0, len = inputArray.length; i < len; i++) { 
     	var value = inputArray[i];
-		
-		if(_.isEmpty(result[lastIndex])) {
-			result.push('');
-		}
+    	var isNumber = (_.isNumber(parseInt(value))) && !(_.isNaN(parseInt(value)));
+    	var isUnderscore = value === '_';
+
+    	if(!isNumber && value !== '_') {
+    		result = null;
+    		break;
+    	}
+
+        if(!result[lastIndex] && result[lastIndex] !== '') {
+            result.push('');
+        }
 
 		var isLastTheSame = value === result[lastIndex].slice(-1);
 		var isEmpty = _.isEmpty(result[lastIndex]);
     	
     	if (isLastTheSame || isEmpty) {
-            result[lastIndex] += value;
+            if(!isUnderscore) result[lastIndex] += value;
         } 
         else {
-        	lastIndex ++;
-			result.push('');
-            result[lastIndex] += value;
-        }
+            if(!isUnderscore || !isLastTheSame) { 
+                lastIndex ++;
+                result.push('');
+                if(!isUnderscore) result[lastIndex] += value;
+            }        			
+    	}
     };
+
+    if(result) {
+	    result = _.without(result, ''); // clear empty elements from array
+    }
 
     return result;
 }
