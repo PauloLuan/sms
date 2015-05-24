@@ -11,11 +11,11 @@ var numberToText = function() {
 }
 
 router.post('/number', function (req, res, next) {
-    res.sendStatus(200);
+    res.json({});
 });
 
 router.post('/text', function (req, res, next) {
-    res.sendStatus(200);
+    res.json({});
 });
 
 module.exports = router;
