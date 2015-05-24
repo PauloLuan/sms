@@ -50,12 +50,50 @@ describe('Assertions for keyboard functions', function () {
         done();
     });
 
-    it('splitNumberSequences should split into small sequences', function (done) {
+    it('splitNumberSequences should return an array with 2 as a length', function (done) {
         var split1 = sms.splitNumberSequences('1122');
         split1.should.be.an.Array;
         split1.should.have.length(2);
-        split1[0].should.be.eql('11');
-        split1[1].should.be.eql('22');
+        split1.should.be.eql(['11', '22']);
+        done();
+    });
+
+    it('splitNumberSequences should split numbers after undescore', function (done) {
+        var split2 = sms.splitNumberSequences('3_33');
+        split2.should.be.an.Array;
+        split2.should.have.length(2);
+        split2.should.be.eql(["3", "33"]);
+        done();
+    });
+
+    it('splitNumberSequences should split into small sequences', function (done) {
+        var split2 = sms.splitNumberSequences('833777783303_33063377772');
+        split2.should.be.an.Array;
+        split2.should.have.length(13);
+        split2.should.be.eql(["8", "33", "7777", "8", "33", "0", "3", "33", "0", "6", "33", "7777", "2"]);
+        done();
+    });
+
+    it('splitNumberSequences should split into small sequences', function (done) {
+        var split3 = sms.splitNumberSequences('123aa334');
+        should.not.exist(split3);
+        done();
+    });
+
+    it('splitNumberSequences should ignore underscores', function (done) {
+        should.not.exist(sms.splitNumberSequences('123aa334'));
+        var test1 = sms.splitNumberSequences('11______22____________');
+        test1.should.have.length(2);
+        test1.should.not.containEql('_');
+        
+        var test2 = sms.splitNumberSequences('11______22');
+        test2.should.have.length(2);
+        test2.should.not.containEql('_');
+        
+        var test3 = sms.splitNumberSequences('___11___22___');
+        test3.should.have.length(2);
+        test3.should.not.containEql('_');
+        
         done();
     });
 });
