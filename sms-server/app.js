@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
-var sms = require('./routes/sms');
+var sms = require('./routes/sms').router;
 
 var app = express();
 
