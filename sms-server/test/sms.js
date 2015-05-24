@@ -29,9 +29,15 @@ describe('Assertions for keyboard functions', function () {
         done();
     });
     
-    it('textToNumber Assertions', function (done) {
+    it('textToNumber TESTE must return 8337777833', function (done) {
         var expect = '8337777833';
         sms.textToNumber('TESTE').should.equal(expect);
+        done();
+    });
+
+    it('textToNumber TESTE DE MESA should be equal as 833777783303_33063377772', function (done) {
+        var expect = '833777783303_33063377772';
+        sms.textToNumber('TESTE DE MESA').should.equal(expect);
         done();
     });
 
