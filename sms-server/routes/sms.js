@@ -152,13 +152,13 @@ var numberToText = function (inputNumber) {
 router.post('/number', function (req, res, next) {
     var params = req.body;
     var result = textToNumber(params.text);
-    return res.json({});
+    return res.json(result);
 });
 
 router.post('/text', function (req, res, next) {
     var params = req.body;
     var result = textToNumber(params.text);
-    return res.json({});
+    return res.json(result);
 });
 
 exports.isOnlyNumbersOrUnderscore = isOnlyNumbersOrUnderscore;
