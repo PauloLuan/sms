@@ -1,7 +1,41 @@
 'use strict';
 
 var request = require('supertest');
+var should = require('should');
 var app = require('../app');
+var sms = require('../routes/sms');
+
+describe('Assertions for keyboard functions', function () {
+    
+    it('findValueIndex \'a\' should return {keyboardNumber:\'2\', index:0 }', function (done) {
+        var result = sms.findValueIndex('a');
+        result.keyboardNumber.should.equal('2');
+        result.index.should.equal(0);
+        sms.repeatString(result.keyboardNumber, result.index + 1).should.equal('2');
+        done();
+    });
+    
+    it('findValueIndex \'s\' should return {keyboardNumber:\'7\', index:3 }', function (done) {
+        var result = sms.findValueIndex('s');
+        result.keyboardNumber.should.equal('7');
+        result.index.should.equal(3);
+        sms.repeatString(result.keyboardNumber, result.index + 1).should.equal('7777');
+        done();
+    });
+    
+    it('findValueIndex \'4\' should return null', function (done) {
+        var result = sms.findValueIndex('4');
+        should.not.exist(result);
+        done();
+    });
+    
+    it('textToNumber Assertions', function (done) {
+        var expect = '8337777833';
+        sms.textToNumber('TESTE').should.equal(expect);
+        done();
+    });
+
+});
 
 describe('Assertions for /sms endpoint', function () {
     
