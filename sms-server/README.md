@@ -55,3 +55,12 @@ To run the tests, just run [mocha](http://mochajs.org/).
     ./node_modules/mocha/bin/mocha
 
 Or, just install as a global app `npm install -g mocha` and run `mocha`
+
+## Sending requests
+
+You can use CURL to send post requests to the API as well:
+
+    curl -X POST 'http://localhost:4000/sms/text' \
+        -d 'text=TESTE DE MESA'
+
+Another good alternative is to use [postman](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm) to send the requests.
