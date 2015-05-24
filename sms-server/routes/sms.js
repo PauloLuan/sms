@@ -18,89 +18,119 @@ var keyboard = {
     '0': [' '],
 }
 
-var repeatString = function(string, num) { return new Array(parseInt(num) + 1).join(string); };
+var repeatString = function (string, num) {
+    return new Array(parseInt(num) + 1).join(string);
+};
 
-var findValueIndex = function(searchLetter) {
-	var valueIndex;
+var findValueIndex = function (searchLetter) {
+    var valueIndex;
 
     for (var arraykey in keyboard) {
-		var lettersArray = keyboard[arraykey]	
-		var index = lettersArray.indexOf(searchLetter);
-        
-        if (index !== -1) { 
-        	valueIndex = {
-        		keyboardNumber: arraykey, 
-        		index: index
-        	}; 
+        var lettersArray = keyboard[arraykey]
+        var index = lettersArray.indexOf(searchLetter);
+
+        if (index !== -1) {
+            valueIndex = {
+                keyboardNumber: arraykey,
+                index: index
+            };
 
             break;
         }
-	}
+    }
 
-	return valueIndex;
+    return valueIndex;
 }
 
 var textToNumber = function (inputText) {
     var processedText = '';
     var count, lastLetter;
 
-    var lowerInput = inputText.toLowerCase(); 
+    var lowerInput = inputText.toLowerCase();
 
     _.forEach(lowerInput, function (value, key) {
         var valueIndex = findValueIndex(value);
 
-		if(valueIndex) {
-			valueIndex.index += 1; // arrays begins on zero, we have to increase the element before to do the next operation
-			var multipliedString = repeatString(valueIndex.keyboardNumber, valueIndex.index);
-			
-			// must add an underscore when the sequence is the same as the last number.
-			if(processedText.slice(-1) == valueIndex.keyboardNumber) {
-				processedText += "_";
-			}
+        if (valueIndex) {
+            valueIndex.index += 1; // arrays begins on zero, we have to increase the element before to do the next operation
+            var multipliedString = repeatString(valueIndex.keyboardNumber, valueIndex.index);
 
-			processedText += multipliedString;
-		}
+            // must add an underscore when the sequence is the same as the last number.
+            if (processedText.slice(-1) == valueIndex.keyboardNumber) {
+                processedText += "_";
+            }
+
+            processedText += multipliedString;
+        }
     });
 
     return processedText;
 };
 
-var isOnlyNumbersOrUnderscore = function(input) {
-	var isValid;
+var isOnlyNumbersOrUnderscore = function (input) {
+    var isValid;
 
-	for (var i = 0; i < input.length; i++) {
-		var tempNumber = parseInt(input[i]);
+    // TODO: refactor this for, by caching the lenght into variable
+    for (var i = 0; i < input.length; i++) {
+        var tempNumber = parseInt(input[i]);
+
+        if (_.isNaN(tempNumber) && (input[i] !== '_')) {
+            isValid = false;
+            break;
+        }
+
+        isValid = _.isNumber(tempNumber) || (tempNumber === '_');
+        if (isValid === false) {
+            break;
+        }
+    };
+
+    if (_.isNull(isValid)) {
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+var splitNumberSequences = function (inputArray) {
+    var result = [],
+        lastIndex = 0;
+
+    for (var i = 0; i < inputArray.length; i++) {
+    	var value = inputArray[i];
 		
-		if(_.isNaN(tempNumber) && (input[i] !== '_')) {
-			isValid = false;
-			break;
+		if(_.isEmpty(result[lastIndex])) {
+			result.push('');
 		}
 
-		isValid = _.isNumber(tempNumber) || (tempNumber === '_');
-		if(isValid === false) {
-			break;
-		}
-	};
+		var isLastTheSame = value === result[lastIndex].slice(-1);
+		var isEmpty = _.isEmpty(result[lastIndex]);
+    	
+    	if (isLastTheSame || isEmpty) {
+            result[lastIndex] += value;
+        } 
+        else {
+        	lastIndex ++;
+			result.push('');
+            result[lastIndex] += value;
+        }
+    };
 
-	if(_.isNull(isValid)) {
-		isValid = false;
-	}
-
-	return isValid;
+    return result;
 }
 
 var numberToText = function (inputNumber) {
     var blocks = [];
     var counter, lastNumber, result;
 
-    var lowerInput = inputNumber.toLowerCase(); 
+    var lowerInput = inputNumber.toLowerCase();
 
     _.forEach(lowerInput, function (value, key) {
-   		// quebrar em pequenos pedaços, objeto com: {keyboardNumber, index}
-    	// iterar sobre esses blocos tipo: ['222', '33', '4', '555']
-    	// verificar _ e apenas ignorar e passar pro proximo bloco
-    	// tem que ter função pra passar uma seuqencia de numeros e ele devolver a letra
-    	// adicionar ao resultado
+        // quebrar em pequenos pedaços, objeto com: {keyboardNumber, index}
+        // iterar sobre esses blocos tipo: ['222', '33', '4', '555']
+        // verificar _ e apenas ignorar e passar pro proximo bloco
+        // tem que ter função pra passar uma seuqencia de numeros e ele devolver a letra
+        // adicionar ao resultado
     });
 
     return processedText;
@@ -119,6 +149,7 @@ router.post('/text', function (req, res, next) {
 });
 
 exports.isOnlyNumbersOrUnderscore = isOnlyNumbersOrUnderscore;
+exports.splitNumberSequences = splitNumberSequences;
 exports.repeatString = repeatString;
 exports.findValueIndex = findValueIndex;
 exports.keyboard = keyboard;
