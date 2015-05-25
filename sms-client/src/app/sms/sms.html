@@ -9,13 +9,15 @@
     <md-content style="height: 600px;">
         <md-input-container md-no-float>
             <md-icon md-svg-src="assets/images/phone.svg"></md-icon>
-            <input ng-model="user.phone" type="text" placeholder="SMS Message">
+            <input ng-model="sms" type="text" placeholder="SMS Message">
+            {{sms | smsKeyboard }}
         </md-input-container>
 
         <md-list>
             <md-list-item class="md-3-line" ng-repeat="item in messages">
                 <div class="md-list-item-text">
-                    <h4>{{item.message}}</h4>
+                    <h4>send: {{item.input}}</h4>
+                    <p>received: {{item.result}}</p>
                 </div>
                 <md-divider inset></md-divider>
             </md-list-item>

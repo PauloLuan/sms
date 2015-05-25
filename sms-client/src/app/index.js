@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('smsClient', ['ngSanitize', 'ngResource', 'ui.router', 'ngMaterial'])
+angular.module('smsClient', ['ngSanitize', 'ngResource', 'ui.router', 'ngMaterial', 'ngMessages'])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {

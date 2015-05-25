@@ -1,0 +1,26 @@
+<div layout="vertical" layout-fill>
+
+    <md-content layout-padding>
+        <form name="projectForm">
+            <md-input-container>
+                <label>Name: </label>
+                <input required name="name" ng-model="form.name">
+
+                <div ng-messages="projectForm.name.$error">
+                    <div ng-message="required">Name is required.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container>
+                <label>Password: </label>
+                <input required name="password" ng-model="form.password">
+
+                <div ng-messages="projectForm.password.$error">
+                    <div ng-message="required">Password is required.</div>
+                </div>
+            </md-input-container>
+
+        </form>
+    </md-content>
+
+</div>

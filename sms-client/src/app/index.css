@@ -1,3 +1,14 @@
 .toolbardemoBasicUsage md-toolbar md-icon.md-default-theme {
     color: white;
 }
+
+.toolbardemoScrollShrink .face {
+    width: 48px;
+    margin: 16px;
+    border-radius: 48px;
+    border: 1px solid #ddd;
+}
+
+.inputdemoErrors .inputErrorsApp {
+    min-height: 48px;
+}
