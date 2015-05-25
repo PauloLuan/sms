@@ -130,20 +130,39 @@ var splitNumberSequences = function (inputArray) {
     }
 
     return result;
-}
+};
+
+var getLetterByNumberSequence = function(sequence) {
+    if(!allTheSame(sequence)) {
+        return null;
+    }
+    var value;
+    var number = array[0];
+    var len = sequence.length;
+    var letterArray = keyboard[number]; 
+    
+    if(letterArray) {
+        value = letterArray[len];        
+    }
+
+    return value;
+};
+
+function allTheSame(array) {
+    var first = array[0];
+    return array.every(function(element) {
+        return element === first;
+    });
+};
 
 var numberToText = function (inputNumber) {
-    var blocks = [];
-    var counter, lastNumber, result;
-
+    var result = '';
     var lowerInput = inputNumber.toLowerCase();
+    var splittedArray = splitNumberSequences(lowerInput);
 
-    _.forEach(lowerInput, function (value, key) {
-        // quebrar em pequenos pedaços, objeto com: {keyboardNumber, index}
-        // iterar sobre esses blocos tipo: ['222', '33', '4', '555']
-        // verificar _ e apenas ignorar e passar pro proximo bloco
-        // tem que ter função pra passar uma seuqencia de numeros e ele devolver a letra
-        // adicionar ao resultado
+    _.forEach(splittedArray, function (value, key) {
+        var sequenceResult = getLetterByNumberSequence(value);
+        if(sequenceResult && sequenceResult != '') result += sequenceResult;
     });
 
     return processedText;
@@ -151,7 +170,7 @@ var numberToText = function (inputNumber) {
 
 router.post('/number', function (req, res, next) {
     var params = req.body;
-    var result = textToNumber(params.text);
+    var result = numberToText(params.text);
     return res.json(result);
 });
 
