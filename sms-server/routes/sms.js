@@ -176,13 +176,21 @@ self.numberToText = function (inputNumber) {
 self.router.post('/number', function (req, res, next) {
     var params = req.body;
     var result = self.numberToText(params.text);
-    return res.json(result);
+    var resultJson = {
+        'input': params.text, 
+        'result': result
+    }; 
+    return res.json(resultJson);
 });
 
 self.router.post('/text', function (req, res, next) {
     var params = req.body;
     var result = self.textToNumber(params.text);
-    return res.json(result);
+    var resultJson = {
+        'input': params.text, 
+        'result': result
+    }; 
+    return res.json(resultJson);
 });
 
 module.exports = self;
