@@ -85,15 +85,43 @@ describe('Assertions for keyboard functions', function () {
         var test1 = sms.splitNumberSequences('11______22____________');
         test1.should.have.length(2);
         test1.should.not.containEql('_');
-        
+
         var test2 = sms.splitNumberSequences('11______22');
         test2.should.have.length(2);
         test2.should.not.containEql('_');
-        
+
         var test3 = sms.splitNumberSequences('___11___22___');
         test3.should.have.length(2);
         test3.should.not.containEql('_');
-        
+
+        done();
+    });
+
+    it('getLetterByNumberSequence', function (done) {
+        sms.getLetterByNumberSequence('2').should.be.eql('a');
+        sms.getLetterByNumberSequence('77').should.be.eql('q');
+        sms.getLetterByNumberSequence('22').should.be.eql('b');
+        should.not.exist(sms.getLetterByNumberSequence('222333'));
+        done();
+    });
+
+    it('allTheSame', function (done) {
+        sms.allTheSame('111').should.be.true;
+        sms.allTheSame('aaa').should.be.true;
+        sms.allTheSame('***').should.be.true;
+        sms.allTheSame('1112').should.be.false;
+        sms.allTheSame('111222').should.be.false;
+        done();
+    });
+
+    it('numberToText', function (done) {
+        sms.numberToText('83377778330').should.be.eql('teste ');
+        sms.numberToText('8337777833').should.be.eql('teste');
+        sms.numberToText('833777783303_33063377772').should.be.eql('teste de mesa');
+        sms.numberToText('833777783303_____33063377772').should.be.eql('teste de mesa');
+        sms.numberToText('__833777783303_____33063377772__').should.be.eql('teste de mesa');
+        sms.numberToText('2').should.be.eql('a');
+        sms.numberToText('77').should.be.eql('q');
         done();
     });
 });
