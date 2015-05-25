@@ -173,6 +173,26 @@ self.numberToText = function (inputNumber) {
     return result;
 };
 
+
+/**
+ * @api {post} /sms/number Request a text conversion passing a number as parameter and receives a text representation of that number.
+ * @apiName GetTextByNumber
+ *
+ * @apiParam {Text} A number sequence representing a sms message.
+ * @apiSuccess {Object} resultJson a json with the input and the converted result.
+ *
+ * @apiParamExample {json} Request-Example:
+ *     {
+ *       "text": '833777783303_33063377772'
+ *     }
+ *
+ * @apiResponseExample {json} Response-Example:
+ *     {
+ *       'input': '833777783303_33063377772', 
+ *       'result': 'teste de mesa'
+ *     }
+ *
+ */
 self.router.post('/number', function (req, res, next) {
     var params = req.body;
     var result = self.numberToText(params.text);
@@ -183,6 +203,26 @@ self.router.post('/number', function (req, res, next) {
     return res.json(resultJson);
 });
 
+
+/**
+ * @api {post} /sms/text Request a sms conversion, converting a text to a number.
+ * @apiName GetNumberByText
+ *
+ * @apiParam {Text} A number sequence representing the sms message.
+ * @apiSuccess {Object} resultJson a json with the input and the generated result.
+ *
+ * @apiParamExample {json} Request-Example:
+ *     {
+ *       "text": 'teste de mesa'
+ *     }
+ *
+ * @apiResponseExample {json} Response-Example:
+ *     {
+ *       'input': 'teste de mesa', 
+ *       'result': '833777783303_33063377772'
+ *     }
+ *
+ */
 self.router.post('/text', function (req, res, next) {
     var params = req.body;
     var result = self.textToNumber(params.text);
