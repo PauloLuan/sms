@@ -64,3 +64,38 @@ You can use CURL to send post requests to the API as well:
         -d 'text=TESTE DE MESA'
 
 Another good alternative is to use [postman](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm) to send the requests.
+
+# Endpoints
+
+## Text to Number: 
+POST /sms/text/
+input: 
+
+```json
+{ text: 'teste de mesa' }
+```
+
+result:
+```json
+{
+    'input': 'teste de mesa', 
+    'result': '833777783303_33063377772'
+}
+```
+
+## Number to Text: 
+POST /sms/number/
+
+input: 
+
+```json
+{ text: '833777783303_33063377772' }
+```
+
+result:
+```json
+{
+    'input': '833777783303_33063377772',
+    'result': 'teste de mesa'
+}
+```
